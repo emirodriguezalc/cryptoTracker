@@ -1,14 +1,16 @@
 import CryptoItem from "../types/cryptoItem";
 
-
-export const fetchCryptoItems = async (): Promise<CryptoItem[]> => {
+export const fetchCryptoItems = async (page: number): Promise<CryptoItem[]> => {
   try {
     const response = await fetch(
-      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&price_change_percentage=24h,7d&per_page=10&page=1'
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&price_change_percentage=24h,7d&per_page=10&page=${page}`
     );
     const data = await response.json();
+    if (!Array.isArray(data)) {
+      return []; // Return an empty array if the response data is not an array
+    }
 
-    const cryptoItems: CryptoItem[] = data.map((item: any) => {
+    const cryptoItems: CryptoItem[] = data?.map((item: any) => {
       const {
         id,
         name,
@@ -32,6 +34,6 @@ export const fetchCryptoItems = async (): Promise<CryptoItem[]> => {
 
     return cryptoItems;
   } catch (error) {
-    throw new Error('Failed to fetch crypto items');
+    throw new Error(`Failed to fetch crypto items: ${error}`);
   }
 };
