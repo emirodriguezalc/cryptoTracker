@@ -7,7 +7,7 @@ export const fetchCryptoItems = async (page: number): Promise<CryptoItem[]> => {
     );
     const data = await response.json();
     if (!Array.isArray(data)) {
-      return []; // Return an empty array if the response data is not an array
+      return [];
     }
 
     const cryptoItems: CryptoItem[] = data?.map((item: any) => {
