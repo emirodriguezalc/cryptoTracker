@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, StyleSheet, Text, Modal } from 'react-native';
 import { fetchCryptoItems } from '../api/fetchCryptoItems';
 import CryptoListItem from './CryptoListItem';
 import CryptoItem from '../types/cryptoItem';
 import ListHeader from './ListHeader';
+import CryptoDetails from './CryptoDetails';
 
 interface CryptoListProps { }
 
@@ -12,6 +13,8 @@ const CryptoList: React.FC<CryptoListProps> = () => {
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [showDetails, setShowDetails] = useState<boolean>(false); // Control CryptoDetails display
+  const [selectedCrypto, setSelectedCrypto] = useState<CryptoItem | null>(null); // Track selected crypto item
 
   useEffect(() => {
     fetchCryptoData();
@@ -48,7 +51,14 @@ const CryptoList: React.FC<CryptoListProps> = () => {
   };
 
   const renderItem = ({ item }: { item: CryptoItem }) => {
-    return <CryptoListItem item={item} />;
+    const handleItemPress = () => {
+      setSelectedCrypto(item);
+      setShowDetails(true);
+    };
+
+    return (
+      <CryptoListItem item={item} onPress={handleItemPress} />
+    );
   };
 
   const renderFooter = () => {
@@ -83,6 +93,9 @@ const CryptoList: React.FC<CryptoListProps> = () => {
           <Text style={styles.emptyText}>The emptiness... maybe turn it off and on again?</Text>
         )}
       </View>
+      {selectedCrypto && <Modal visible={showDetails} animationType="slide">
+        <CryptoDetails crypto={selectedCrypto} onClose={() => setShowDetails(false)} />
+      </Modal>}
     </View>
   );
 };
