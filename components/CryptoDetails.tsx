@@ -10,7 +10,7 @@ interface CryptoDetailsProps {
 }
 
 const CryptoDetails: React.FC<CryptoDetailsProps> = ({ crypto, onClose }) => {
-  const [details, setDetails] = useState<any>(null); // State to store the fetched details
+  const [details, setDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 8,
     paddingVertical: 16,
-    borderBottomColor: '#9b51e0', // Added bottom border color
-    borderBottomWidth: 1, // Added bottom border width
+    borderBottomColor: '#9b51e0',
+    borderBottomWidth: 1,
     color: '#28004B'
   },
   label: {

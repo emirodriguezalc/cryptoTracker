@@ -33,7 +33,6 @@ const CryptoChart: React.FC<CryptoChartProps> = ({ coinId }) => {
           if (existingIndex === -1) {
             result.push([formattedDate, price[1]]);
           } else {
-            // Update the price if there's already an entry for the same date
             result[existingIndex][1] = price[1];
           }
           return result;
@@ -41,7 +40,6 @@ const CryptoChart: React.FC<CryptoChartProps> = ({ coinId }) => {
 
         const labels = filteredData
           .map((price: any, index: number) => {
-            // Show labels for every fifth day
             if (index % 5 === 0) {
               return price[0];
             }
@@ -74,18 +72,16 @@ const CryptoChart: React.FC<CryptoChartProps> = ({ coinId }) => {
   const handleDotPress = (data: { index: number }) => {
     const { index } = data;
     const date = chartData?.dotLabels[index];
-    const price = chartData?.datasets[0].data[index].toFixed(2);
-    console.log(chartData);
-    setSelectedDotData({ date, price });
+    const price = parseFloat(chartData?.datasets[0].data[index]?.toFixed(2) || '');
+    setSelectedDotData({ date: date || '', price });
   };
 
+
   const handleOutsidePress = () => {
-    // Reset the selectedDotData when touching outside the globe container
     setSelectedDotData(null);
   };
 
   if (!chartData) {
-    // Render loading state or fallback component while data is being fetched
     return <Text>Loading...</Text>;
   }
 

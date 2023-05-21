@@ -13,8 +13,8 @@ const CryptoList: React.FC<CryptoListProps> = () => {
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [showDetails, setShowDetails] = useState<boolean>(false); // Control CryptoDetails display
-  const [selectedCrypto, setSelectedCrypto] = useState<CryptoItem | null>(null); // Track selected crypto item
+  const [showDetails, setShowDetails] = useState<boolean>(false);
+  const [selectedCrypto, setSelectedCrypto] = useState<CryptoItem | null>(null);
 
   useEffect(() => {
     fetchCryptoData();
