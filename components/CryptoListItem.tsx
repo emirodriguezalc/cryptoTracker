@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CryptoItem from '../types/cryptoItem';
 
 interface CryptoListItemProps {
   item: CryptoItem;
+  onPress: () => void;
 }
 
-const CryptoListItem: React.FC<CryptoListItemProps> = ({ item }) => {
+const CryptoListItem: React.FC<CryptoListItemProps> = ({ item, onPress }) => {
   const {
     name,
     symbol,
@@ -16,31 +17,41 @@ const CryptoListItem: React.FC<CryptoListItemProps> = ({ item }) => {
     priceChangePercentage24h,
     priceChangePercentage7d,
   } = item;
+
+  const renderChangePercentage = (percentage: number) => {
+    const formattedPercentage = percentage.toFixed(1);
+    const isPositive = percentage > 0;
+    const sign = isPositive ? '+' : '';
+
+    return (
+      <Text style={styles.changePercentage}>
+        {sign}{formattedPercentage}%
+      </Text>
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.rankContainer}>
-        <Text style={styles.rank}>#{marketCapRank}</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.symbol}>{symbol}</Text>
-      </View>
-      <View style={styles.priceContainer}>
-        <Text style={styles.price}>€{currentPrice.toFixed(1)}</Text>
-      </View>
-      <View style={styles.changeContainer}>
-        <Text style={styles.changePercentage}>
-          {priceChangePercentage24h.toFixed(1)}%
-        </Text>
-        <Text style={styles.changePercentage}>
-          {priceChangePercentage7d.toFixed(1)}%
-        </Text>
-      </View>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.rankContainer}>
+          <Text style={styles.rank}>#{marketCapRank}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.symbol}>{symbol}</Text>
+        </View>
+        <View style={styles.priceContainer}>
+          <Text style={styles.price}>€{currentPrice.toFixed(1)}</Text>
+        </View>
+        <View style={styles.changeContainer}>
+          {renderChangePercentage(priceChangePercentage24h)}
+          {renderChangePercentage(priceChangePercentage7d)}
+        </View>
         <Ionicons name="chevron-forward" size={24} color="#ffffff" />
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

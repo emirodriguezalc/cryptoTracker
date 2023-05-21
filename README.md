@@ -22,7 +22,7 @@ To run and use the Cryptocurrency Tracker app, you need to have the following:
      - 24-hour price change percentage
      - 7-day price change percentage
 
-2. Detailed Cryptocurrency Information:
+2. Detailed Cryptocurrency Information: ✅
    - Users can tap on a cryptocurrency to view more detailed information.
    - The detailed information includes:
      - Price in multiple currencies (USD, EUR, GBP, etc.)
