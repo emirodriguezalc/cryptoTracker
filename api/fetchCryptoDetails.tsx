@@ -10,6 +10,7 @@ export const fetchCryptoDetails = async (cryptoItemId: string): Promise<any> => 
       market_data: { current_price, market_cap, total_volume, circulating_supply, total_supply, high_24h,
         low_24h },
     } = data;
+
     return {
       price: {
         usd: current_price?.usd,
