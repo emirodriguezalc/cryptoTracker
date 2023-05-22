@@ -106,7 +106,7 @@ If I had more time, there are several areas I would focus on enhancing:
 
 4. Improved Price Chart: The 30-day price chart could be further improved to provide more valuable insights to the users. Exploring additional charting libraries or enhancing the existing charting component would be beneficial in making the chart more informative and visually appealing.
 
-5. Style Enhancements: While working within the given time constraints, I incorporated some colors from the provided style guide. However, given more time, I would invest in refining the overall styles, ensuring a more cohesive and visually pleasing user interface.
+5. Style Enhancements: While working within the given time constraints, I incorporated some colors from the provided style guide. However, given more time, I would invest in refining the overall styles, ensuring a more cohesive and visually pleasing user interface. Also, the stylesheets for each component are not DRY.
 
 6. Animations and Images: To enhance the user experience, I would add animations and leverage appropriate images where applicable. These elements can bring life to the application and make it more engaging for users.
 

@@ -73,7 +73,6 @@ const CryptoDetails: React.FC<CryptoDetailsProps> = ({ crypto, onClose }) => {
           <CryptoChart coinId={crypto.id} />
         </View>
       </ScrollView>
-      {/* Close button */}
       <Text style={styles.closeButton} onPress={onClose}>
         X
       </Text>
