@@ -3,7 +3,7 @@ import CryptoItem from "../types/cryptoItem";
 export const fetchCryptoItems = async (page: number): Promise<CryptoItem[]> => {
   try {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&price_change_percentage=24h,7d&per_page=10&page=${page}`
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&price_change_percentage=24h,7d&per_page=10&page=${page}`
     );
     const data = await response.json();
     if (!Array.isArray(data)) {

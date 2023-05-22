@@ -7,10 +7,10 @@ const ListHeader = () => {
     <View style={styles.header}>
       <Text style={styles.rankLabel}>Rank</Text>
       <Text style={styles.infoLabel}>Name</Text>
-      <Text style={styles.priceLabel}>Price</Text>
+      <Text style={styles.priceLabel}>Price(usd)</Text>
       <View style={styles.changeLabelContainer}>
-        <Text style={styles.changeLabel}>24h</Text>
-        <Text style={styles.changeLabel}>7d</Text>
+        <Text style={styles.changeLabel}>24h % dif</Text>
+        <Text style={styles.changeLabel}>7d % dif</Text>
       </View>
     </View>
   );
@@ -28,31 +28,27 @@ const styles = StyleSheet.create({
     flex: 0.5,
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#9b51e0',
   },
   infoLabel: {
     flex: 1.2,
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#9b51e0',
   },
   priceLabel: {
     flex: 1.2,
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#9b51e0',
-    textAlign: 'left',
+    textAlign: 'center',
   },
   changeLabelContainer: {
     flex: 1.5,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   changeLabel: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#9b51e0',
     marginLeft: 8,
   },
 });
