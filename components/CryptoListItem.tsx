@@ -41,7 +41,7 @@ const CryptoListItem: React.FC<CryptoListItemProps> = ({ item, onPress }) => {
           <Text style={styles.symbol}>{symbol}</Text>
         </View>
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>€{currentPrice.toFixed(1)}</Text>
+          <Text style={styles.price}>{currentPrice.toFixed(1)}</Text>
         </View>
         <View style={styles.changeContainer}>
           {renderChangePercentage(priceChangePercentage24h)}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1.3,
-    marginRight: 2,
+    marginRight: 0.5,
   },
   name: {
     fontSize: 18,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   priceContainer: {
     flex: 1.2,
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   price: {
     fontSize: 18,

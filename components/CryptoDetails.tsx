@@ -9,6 +9,7 @@ interface CryptoDetailsProps {
   onClose: () => void;
 }
 
+
 const CryptoDetails: React.FC<CryptoDetailsProps> = ({ crypto, onClose }) => {
   const [details, setDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -25,8 +26,20 @@ const CryptoDetails: React.FC<CryptoDetailsProps> = ({ crypto, onClose }) => {
       });
   }, [crypto.id]);
 
+  const parsedDetails = [
+    { 'label': 'Price (USD):', 'value': details?.price.usd?.toString() },
+    { 'label': 'Price (EUR):', 'value': details?.price.eur?.toString() },
+    { 'label': 'Price (GBP):', 'value': details?.price.gbp?.toString() },
+    { 'label': 'Market Cap:', 'value': details?.marketCap?.toString() },
+    { 'label': '24-hour Trading Volume:', 'value': details?.volume?.toString() },
+    { 'label': 'Circulating Supply:', 'value': details?.circulatingSupply?.toString() },
+    { 'label': 'Total Supply:', 'value': details?.totalSupply?.toString() },
+    { 'label': 'All-time High Price:', 'value': details?.allTimeHigh?.toString() },
+    { 'label': 'All-time Low Price:', 'value': details?.allTimeLow?.toString() }
+  ]
+
   const renderDetailItem = (label: string, value: string) => (
-    <View style={styles.detailItem}>
+    <View style={styles.detailItem} key={`${label}${value}`}>
       <Text style={styles.label}>{label}</Text>
       <Text style={styles.value}>{value}</Text>
     </View>
@@ -56,19 +69,10 @@ const CryptoDetails: React.FC<CryptoDetailsProps> = ({ crypto, onClose }) => {
       </View>
       <ScrollView>
         <View style={styles.infoContainer}>
-          {renderDetailItem('Price (USD):', details.price.usd.toString())}
-          {renderDetailItem('Price (EUR):', details.price.eur.toString())}
-          {renderDetailItem('Price (GBP):', details.price.gbp.toString())}
-          {renderDetailItem('Market Cap:', details.marketCap.toString())}
-          {renderDetailItem('24-hour Trading Volume:', details.volume.toString())}
-          {renderDetailItem('Circulating Supply:', details.circulatingSupply.toString())}
-          {renderDetailItem('Total Supply:', details.totalSupply.toString())}
-          {renderDetailItem('All-time High Price:', details.allTimeHigh.toString())}
-          {renderDetailItem('All-time Low Price:', details.allTimeLow.toString())}
+          {details && parsedDetails.map(detail => renderDetailItem(detail.label, detail.value))}
           <CryptoChart coinId={crypto.id} />
         </View>
       </ScrollView>
-      {/* Close button */}
       <Text style={styles.closeButton} onPress={onClose}>
         X
       </Text>

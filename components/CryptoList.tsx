@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Text, Modal } from 'react-native';
+import { View, FlatList, StyleSheet, Text, Modal, TextInput } from 'react-native';
 import { fetchCryptoItems } from '../api/fetchCryptoItems';
 import CryptoListItem from './CryptoListItem';
 import CryptoItem from '../types/cryptoItem';
@@ -15,6 +15,8 @@ const CryptoList: React.FC<CryptoListProps> = () => {
   const [error, setError] = useState<boolean>(false);
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const [selectedCrypto, setSelectedCrypto] = useState<CryptoItem | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filteredCryptoItems, setFilteredCryptoItems] = useState<CryptoItem[]>([]);
 
   useEffect(() => {
     fetchCryptoData();
@@ -40,6 +42,14 @@ const CryptoList: React.FC<CryptoListProps> = () => {
           return [...prevItems, ...data];
         }
       });
+
+      setFilteredCryptoItems((prevItems) => {
+        if (page === 1) {
+          return data;
+        } else {
+          return [...prevItems, ...data];
+        }
+      });
       setPage((prevPage) => prevPage + 1);
       setError(false);
     } catch (error) {
@@ -50,15 +60,28 @@ const CryptoList: React.FC<CryptoListProps> = () => {
     }
   };
 
+  const handleSearchQueryChange = (query: string) => {
+    setSearchQuery(query);
+    filterCryptoItems(query);
+  };
+
+  const filterCryptoItems = (query: string) => {
+    const lowerCaseQuery = query.toLowerCase();
+    const filteredItems = cryptoItems.filter(
+      (item) =>
+        item.name.toLowerCase().includes(lowerCaseQuery) ||
+        item.symbol.toLowerCase().includes(lowerCaseQuery)
+    );
+    setFilteredCryptoItems(filteredItems);
+  };
+
   const renderItem = ({ item }: { item: CryptoItem }) => {
     const handleItemPress = () => {
       setSelectedCrypto(item);
       setShowDetails(true);
     };
 
-    return (
-      <CryptoListItem item={item} onPress={handleItemPress} />
-    );
+    return <CryptoListItem item={item} onPress={handleItemPress} />;
   };
 
   const renderFooter = () => {
@@ -75,11 +98,18 @@ const CryptoList: React.FC<CryptoListProps> = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Crypto List</Text>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search cryptocurrencies..."
+          onChangeText={handleSearchQueryChange}
+        />
+      </View>
       <ListHeader />
       <View style={styles.listContainer}>
-        {cryptoItems.length ? (
+        {filteredCryptoItems.length ? (
           <FlatList
-            data={cryptoItems}
+            data={filteredCryptoItems}
             keyExtractor={(item, index) => `${item.id.toString()}__${index}`}
             renderItem={renderItem}
             initialNumToRender={10}
@@ -93,9 +123,11 @@ const CryptoList: React.FC<CryptoListProps> = () => {
           <Text style={styles.emptyText}>The emptiness... maybe turn it off and on again?</Text>
         )}
       </View>
-      {selectedCrypto && <Modal visible={showDetails} animationType="slide">
-        <CryptoDetails crypto={selectedCrypto} onClose={() => setShowDetails(false)} />
-      </Modal>}
+      {selectedCrypto && (
+        <Modal visible={showDetails} animationType="slide">
+          <CryptoDetails crypto={selectedCrypto} onClose={() => setShowDetails(false)} />
+        </Modal>
+      )}
     </View>
   );
 };
@@ -109,13 +141,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 24,
   },
+  searchContainer: {
+    marginTop: 8,
+    marginBottom: 16,
+  },
+  searchInput: {
+    height: 40,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+  },
   listContainer: {
     width: '100%',
     height: '85%',
     marginTop: 16,
     marginBottom: 16,
-    marginLeft: 2,
-    marginRight: 2,
   },
   listContent: {
     paddingBottom: 2,

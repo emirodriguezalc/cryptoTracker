@@ -124,7 +124,6 @@ const CryptoChart: React.FC<CryptoChartProps> = ({ coinId }) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   touchWrapper: {
     flex: 1,
