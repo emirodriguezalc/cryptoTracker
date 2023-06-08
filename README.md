@@ -114,5 +114,15 @@ If I had more time, there are several areas I would focus on enhancing:
 
 8. Collaborating with a Designer LOL
 
+### In depth comments ###
+
+The fetchCryptoData, filterCryptoItems in cryptolist should be in a different file. 
+
+As the data changes quite often, and be up to date is important, i think i should have called the api like every 30 seconds or so, besides doing it when the CryptoList mounts. Im not sure about caching. What do you think?
+
+The fetchChartData in cryptoChart should be in a separate file, and maybe the filteredData would not be neccesary if i retireved the right amount of information?
+
+The icons should be svg
+
 ### Conclusion
 Overall, I found this technical challenge to be engaging and rewarding. It allowed me to showcase my skills in API integration, component development, and problem-solving. Given more time, I would focus on refining various aspects of the application to further enhance its performance and visual appeal.
